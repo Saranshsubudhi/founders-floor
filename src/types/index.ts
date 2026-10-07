@@ -109,11 +109,26 @@ export interface MeetingRoom {
 export interface CommonArea {
   id: string;
   name: string;
-  type: 'coffee_bar' | 'watercooler' | 'lounge' | 'server_room' | 'elevator';
+  type: 
+    | 'coffee_bar' 
+    | 'watercooler' 
+    | 'lounge' 
+    | 'server_room' 
+    | 'elevator'
+    | 'feature_pod'
+    | 'prototyping_bench'
+    | 'arcade'
+    | 'pingpong'
+    | 'whiteboard'
+    | 'pitch_gong'
+    | 'special_arena';
   x: number;
   y: number;
   width: number;
   height: number;
+  interactEmote?: string;
+  badge?: string;
+  subtext?: string;
 }
 
 export interface Floor {

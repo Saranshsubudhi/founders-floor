@@ -247,6 +247,130 @@ class SoundEffectsService {
       // fallback
     }
   }
+
+  // Retro 8-bit arcade coin insert & jump sound
+  public playArcadeBlip() {
+    if (!this.soundEnabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const notes = [440, 554.37, 659.25, 880];
+      notes.forEach((freq, idx) => {
+        const osc = this.ctx!.createOscillator();
+        const gain = this.ctx!.createGain();
+        const t = now + idx * 0.05;
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0.08, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx!.destination);
+        osc.start(t);
+        osc.stop(t + 0.08);
+      });
+    } catch {
+      // fallback
+    }
+  }
+
+  // Crisp table tennis paddle pop & bounce
+  public playPingPongBounce() {
+    if (!this.soundEnabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(260, now + 0.045);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.045);
+    } catch {
+      // fallback
+    }
+  }
+
+  // Deep resonant brass investment gong
+  public playGong() {
+    if (!this.soundEnabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const freqs = [174.61, 261.63, 349.23, 523.25]; // F3, C4, F4, C5
+      freqs.forEach((freq) => {
+        const osc = this.ctx!.createOscillator();
+        const gain = this.ctx!.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.98, now + 2.2);
+        gain.gain.setValueAtTime(0.14, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
+        osc.connect(gain);
+        gain.connect(this.ctx!.destination);
+        osc.start(now);
+        osc.stop(now + 2.2);
+      });
+    } catch {
+      // fallback
+    }
+  }
+
+  // High-tech sci-fi chirp for GPU cluster & 3D printer
+  public playSciFiChirp() {
+    if (!this.soundEnabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(600, now);
+      osc.frequency.exponentialRampToValueAtTime(1400, now + 0.12);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } catch {
+      // fallback
+    }
+  }
+
+  // Water cooler bubble gulp
+  public playWaterGulp() {
+    if (!this.soundEnabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      [0, 0.12].forEach((delay, idx) => {
+        const osc = this.ctx!.createOscillator();
+        const gain = this.ctx!.createGain();
+        const t = now + delay;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(idx === 0 ? 350 : 520, t);
+        osc.frequency.exponentialRampToValueAtTime(idx === 0 ? 550 : 780, t + 0.08);
+        gain.gain.setValueAtTime(0.1, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx!.destination);
+        osc.start(t);
+        osc.stop(t + 0.08);
+      });
+    } catch {
+      // fallback
+    }
+  }
 }
 
 export const soundEffects = new SoundEffectsService();
